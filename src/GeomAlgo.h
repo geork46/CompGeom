@@ -22,11 +22,12 @@ struct Node
 {
 	enum TypeNode {EDGE, POINT};
 	TypeNode type;
-	Edge const *e;
-	point_type const *p;	
-	Node(Edge const &e) : e(new Edge(e)), p(0), type(EDGE){}
-	Node(point_type const p) : e(0), p(new point_type(p)), type(POINT){}
-	// TODO Устранить утечки памяти здесь
+	union {
+		Edge e;
+		point_type p;	
+	};
+	Node(Edge const &e) : e(e), type(EDGE){}
+	Node(point_type const &p) : p(p), type(POINT){}
 };
 
 struct NodeComparator

@@ -21,7 +21,7 @@ void GeomAlgo::print() const
 		std::cout << l.first << ": ";
 		for (auto node = l.second.begin(); node != l.second.end(); ++node)
 		{
-			std::cout << **node->first.e << " ";
+			std::cout << *node->first.e << " ";
 		}
 		std::cout << "\n";
 	}
@@ -52,10 +52,10 @@ bool NodeComparator::operator()(Node const &a, Node const &b) const
 		{
 			if (a.type == Node::POINT)
 			{
-				return comparePointEdge(*a.p, *b.e);
+				return comparePointEdge(a.p, b.e);
 			} else
 			{			
-				return !comparePointEdge(*b.p, *a.e);
+				return !comparePointEdge(b.p, a.e);
 			}
 		} catch(std::logic_error const & e)
 		{
@@ -63,8 +63,8 @@ bool NodeComparator::operator()(Node const &a, Node const &b) const
 		}
 	} else
 	{
-		double xa = getXfromEdge(*a.e, front);
-		double xb = getXfromEdge(*b.e, front);
+		double xa = getXfromEdge(a.e, front);
+		double xb = getXfromEdge(b.e, front);
 		return xa < xb;
 	}
 	return true;
@@ -140,7 +140,7 @@ polygon_iterator GeomAlgo::contains(point_type const & p) const
 	auto it = layer.second.lower_bound(Node(p));
 	if (it == layer.second.end() || it == layer.second.begin() || (--it) == layer.second.end())
 		return end_iterator;
-	contour_circulator outside(*it->first.e);
+	contour_circulator outside(it->first.e);
 	point_type p1 = *(outside), p2 = *(++outside);
 	vector_type	v1(-100, 0), v2(p2.x - p1.x, p2.y - p1.y);
 	if ((v1 ^ v2) > 0)
