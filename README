@@ -1,0 +1,10 @@
+Simple visualizer of the convex hull algorithm.
+
+Make project: 
+    cd visualization &&
+    qmake && make
+    cd ..
+    qmake && make
+
+Add point:           		double click
+Add polygon or contour:   	press key 'Enter'

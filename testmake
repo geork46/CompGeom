@@ -1,0 +1,11 @@
+compiler = 	g++
+headers = 	-I src \
+			-I visualization/headers
+sources = 	tests/*.cpp \
+			src/GeomAlgo.cpp \
+			visualization/bin/primitives.o
+out		= 	test
+
+all:
+	$(compiler) -std=c++0x $(headers) -o $(out) $(sources)
+	
